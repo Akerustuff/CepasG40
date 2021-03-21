@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vino</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr class="text-center">
+      <th scope="col">Nombre</th>
+      <th scope="col">Puntaje</th>
+      <th scope="col">Cepas</th>
+      <th colspan="3">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wines.each do |wine| %>
+      <tr class="text-center">
+        <td><%= wine.name %></td>
+        <td><%= wine.score %></td>
+        <td  class="text-left"><%= wine.strains.order(:name).map{|s| "#{s.name} (#{wine.getPercentageByStrainId(s.id)}%)"}.join(', ') %>
+        </td>
+        <td><%= link_to 'Ver', wine %></td>
+        <td><%= link_to 'Editar', edit_wine_path(wine) %></td>
+        <td><%= link_to 'Eliminar', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to '<button type="button" class="btn btn-dark">Nuevo vino</button>'.html_safe, new_wine_path %>
+<%= link_to '<button type="button" class="btn btn-dark">Listado de Cepas</button>'.html_safe, strains_path %>
+<%= link_to '<button type="button" class="btn btn-dark">Listado de Enólogos</button>'.html_safe, oenologists_path %>
